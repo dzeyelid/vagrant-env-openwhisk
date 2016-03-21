@@ -1,16 +1,12 @@
 #!/usr/bin/env bash
 
+# Add a repository of Ansible 1.x
+apt-get install -y software-properties-common
+apt-add-repository -y ppa:ansible/ansible-1.9
 apt-get update
+
+# Install Ansible 1.9
+apt-get install -y ansible=1.9.4-1ppa~trusty
+
+# Install Git
 apt-get install -y git
-
-# install pip
-TMP_PIP=/tmp/pip
-if [ ! -e "${TMP_PIP}" ]; then
-    mkdir $TMP_PIP
-fi
-wget "https://bootstrap.pypa.io/get-pip.py" -P $TMP_PIP
-python $TMP_PIP/get-pip.py
-rm -rf $TMP_PIP
-
-# install OpenWhisk CLI
-pip install --upgrade https://new-console.ng.bluemix.net/openwhisk/cli/download

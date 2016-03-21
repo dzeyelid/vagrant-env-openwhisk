@@ -1,0 +1,24 @@
+---
+- hosts: 127.0.0.1
+  become: yes
+  tasks:
+    - name: "Update apt-get"
+      apt: update_cache=yes
+
+    - name: "Install Git"
+      apt: pkg=git
+
+    - name: "Create a temporary directory to install pip"
+      file: path=/etc/pip state=directory mode=0755
+
+    - name: "Get pip installer"
+      get_url: url="https://bootstrap.pypa.io/get-pip.py" dest=/etc/pip
+
+    - name: "Install pip"
+      command: python /etc/pip/get-pip.py
+
+    - name: Remove the temporary directory to install pip
+      file: path=/etc/pip state=absent
+
+    - name: "Install OpenWhisk CLI"
+      command: pip install --upgrade https://new-console.ng.bluemix.net/openwhisk/cli/download
